@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Number Converter</title>
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: "Poppins", sans-serif;
+        background: #0a0a0f;
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .container {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 20px;
+        padding: 30px;
+        width: 370px;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
+        animation: fadeIn 0.5s ease;
+    }
+
+    @keyframes fadeIn {
+        from {opacity: 0; transform: translateY(10px);}
+        to {opacity: 1; transform: translateY(0);}
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        font-weight: 600;
+        letter-spacing: 1px;
+    }
+
+    input, select {
+        width: 100%;
+        padding: 12px;
+        margin: 8px 0;
+        border-radius: 10px;
+        border: none;
+        background: rgba(255,255,255,0.1);
+        color: #fff;
+        outline: none;
+        font-size: 15px;
+    }
+
+    button {
+        width: 100%;
+        padding: 12px;
+        margin-top: 10px;
+        border: none;
+        border-radius: 12px;
+        background: linear-gradient(135deg, #6a5acd, #8a2be2);
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: 0.2s;
+    }
+
+    button:hover {
+        opacity: 0.85;
+        transform: scale(1.02);
+    }
+
+    .result-box {
+        margin-top: 18px;
+        padding: 15px;
+        border-radius: 12px;
+        background: rgba(255,255,255,0.07);
+        font-size: 16px;
+        min-height: 45px;
+        white-space: pre-line;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Number Converter</h2>
+
+    <input type="text" id="valueInput" placeholder="Masukkan angka...">
+
+    <select id="fromBase">
+        <option value="10">Desimal</option>
+        <option value="2">Biner</option>
+        <option value="8">Oktal</option>
+        <option value="16">Heksadesimal</option>
+    </select>
+
+    <select id="toBase">
+        <option value="2">Des → Biner</option>
+        <option value="8">Des → Oktal</option>
+        <option value="16">Des → Hex</option>
+        <option value="10">Ke Desimal</option>
+    </select>
+
+    <button onclick="convert()">Konversi</button>
+
+    <div class="result-box" id="result">Hasil akan muncul di sini...</div>
+</div>
+
+<script>
+function convert() {
+    let value = document.getElementById("valueInput").value.trim();
+    let from = parseInt(document.getElementById("fromBase").value);
+    let to = parseInt(document.getElementById("toBase").value);
+
+    if (value === "") {
+        document.getElementById("result").innerText = "Masukkan angka terlebih dahulu!";
+        return;
+    }
+
+    let decimalValue;
+
+    try {
+        // Convert input → decimal
+        decimalValue = parseInt(value, from);
+        if (isNaN(decimalValue)) throw "invalid";
+    } catch {
+        document.getElementById("result").innerText = "Format angka tidak valid!";
+        return;
+    }
+
+    // Convert decimal → target base
+    let result = decimalValue.toString(to).toUpperCase();
+
+    document.getElementById("result").innerText = `Hasil: ${result}`;
+}
+</script>
+
+</body>
+</html>
