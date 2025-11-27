@@ -3,124 +3,127 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Auto Number Converter</title>
+<title>Number Base Converter</title>
 
 <style>
     body {
         margin: 0;
-        padding: 0;
         font-family: "Poppins", sans-serif;
-        background: #0d0d12;
-        color: #fff;
+        background: #0b0b0f;
+        height: 100vh;
         display: flex;
         justify-content: center;
         align-items: center;
-        height: 100vh;
+        color: #fff;
     }
 
-    .box {
-        width: 420px;
-        padding: 30px;
-        border-radius: 20px;
-        background: rgba(255, 255, 255, 0.05);
-        border: 1px solid rgba(255, 255, 255, 0.08);
+    .container {
+        width: 430px;
+        padding: 28px;
+        border-radius: 18px;
+        background: rgba(255,255,255,0.06);
+        border: 1px solid rgba(255,255,255,0.08);
         backdrop-filter: blur(12px);
-        box-shadow: 0 0 25px rgba(0, 0, 0, 0.4);
+        box-shadow: 0 0 30px rgba(0,0,0,0.45);
     }
 
     h2 {
         text-align: center;
         margin-bottom: 18px;
         font-weight: 600;
-        letter-spacing: .5px;
     }
 
-    input {
+    select, input {
         width: 100%;
         padding: 14px;
         border-radius: 12px;
-        background: rgba(255,255,255,0.1);
         border: none;
         outline: none;
+        margin-bottom: 16px;
+        font-size: 15px;
+        background: rgba(255,255,255,0.12);
         color: #fff;
-        font-size: 16px;
-        margin-bottom: 20px;
-    }
-
-    .result {
-        margin-top: 12px;
-        padding: 14px;
-        background: rgba(255,255,255,0.05);
-        border-radius: 12px;
-        font-size: 16px;
-        border: 1px solid rgba(255,255,255,0.07);
     }
 
     .label {
-        color: #b8b8ff;
+        margin-top: 10px;
         font-size: 14px;
+        color: #b9b9ff;
         margin-bottom: 4px;
-        font-weight: 500;
+    }
+
+    .output {
+        background: rgba(255,255,255,0.08);
+        padding: 14px;
+        border-radius: 10px;
+        border: 1px solid rgba(255,255,255,0.1);
+        margin-bottom: 10px;
+        font-size: 16px;
     }
 </style>
 </head>
 <body>
 
-<div class="box">
-    <h2>Auto Number Converter</h2>
+<div class="container">
+    <h2>Number Base Converter</h2>
 
-    <input type="text" id="inputValue" placeholder="Ketik angka dalam format apa pun..." oninput="autoConvert()">
+    <select id="baseSelect" onchange="convert()">
+        <option value="10">Desimal</option>
+        <option value="2">Biner</option>
+        <option value="8">Oktal</option>
+        <option value="16">Heksadesimal</option>
+    </select>
+
+    <input type="text" id="inputNumber" placeholder="Masukkan angka..." oninput="convert()">
 
     <div class="label">Desimal</div>
-    <div class="result" id="dec">-</div>
+    <div class="output" id="outDec">-</div>
 
     <div class="label">Biner</div>
-    <div class="result" id="bin">-</div>
+    <div class="output" id="outBin">-</div>
 
     <div class="label">Oktal</div>
-    <div class="result" id="oct">-</div>
+    <div class="output" id="outOct">-</div>
 
     <div class="label">Heksadesimal</div>
-    <div class="result" id="hex">-</div>
+    <div class="output" id="outHex">-</div>
 </div>
 
+
 <script>
-function detectBase(str) {
-    if (/^[01]+$/i.test(str)) return 2;
-    if (/^[0-7]+$/i.test(str)) return 8;
-    if (/^[0-9A-F]+$/i.test(str)) return 16;
-    return 10;
-}
+function convert() {
+    const base = parseInt(document.getElementById("baseSelect").value);
+    const val = document.getElementById("inputNumber").value.trim();
 
-function autoConvert() {
-    let value = document.getElementById("inputValue").value.trim();
-
-    if (value === "") {
-        document.getElementById("dec").innerText = "-";
-        document.getElementById("bin").innerText = "-";
-        document.getElementById("oct").innerText = "-";
-        document.getElementById("hex").innerText = "-";
+    if (val === "") {
+        resetOutput();
         return;
     }
 
-    let base = detectBase(value);
     let decimal;
 
     try {
-        decimal = parseInt(value, base);
+        decimal = parseInt(val, base);
         if (isNaN(decimal)) throw "invalid";
     } catch {
-        document.getElementById("dec").innerText = "⚠️ Format tidak valid";
-        document.getElementById("bin").innerText = "-";
-        document.getElementById("oct").innerText = "-";
-        document.getElementById("hex").innerText = "-";
+        document.getElementById("outDec").innerText = "⚠ Format tidak valid";
+        document.getElementById("outBin").innerText = "-";
+        document.getElementById("outOct").innerText = "-";
+        document.getElementById("outHex").innerText = "-";
         return;
     }
 
-    document.getElementById("dec").innerText = decimal;
-    document.getElementById("bin").innerText = decimal.toString(2);
-    document.getElementById("oct").innerText = decimal.toString(8);
-    document.getElementById("hex").innerText = decimal.toString(16).toUpperCase();
+    document.getElementById("outDec").innerText = decimal;
+    document.getElementById("outBin").innerText = decimal.toString(2);
+    document.getElementById("outOct").innerText = decimal.toString(8);
+    document.getElementById("outHex").innerText = decimal.toString(16).toUpperCase();
+}
+
+function resetOutput() {
+    document.getElementById("outDec").innerText = "-";
+    document.getElementById("outBin").innerText = "-";
+    document.getElementById("outOct").innerText = "-";
+    document.getElementById("outHex").innerText = "-";
 }
 </script>
 
