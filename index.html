@@ -6,21 +6,27 @@
 <title>Number Base Converter</title>
 
 <style>
+    * {
+        box-sizing: border-box;
+    }
+
     body {
         margin: 0;
         font-family: "Poppins", sans-serif;
         background: #0b0b0f;
-        height: 100vh;
+        min-height: 100vh;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        padding: 20px; /* supaya tidak nempel di pinggir HP */
         color: #fff;
     }
 
     .container {
-        width: 430px;
-        padding: 28px;
+        width: 100%;
+        max-width: 430px;
+        padding: 25px;
         border-radius: 18px;
         background: rgba(255,255,255,0.06);
         border: 1px solid rgba(255,255,255,0.08);
@@ -30,7 +36,7 @@
 
     h2 {
         text-align: center;
-        margin-bottom: 18px;
+        margin-bottom: 20px;
         font-weight: 600;
     }
 
@@ -40,9 +46,9 @@
         border-radius: 12px;
         border: none;
         outline: none;
-        margin-bottom: 16px;
-        font-size: 15px;
-        background: #0f0f15;     /* HITAM */
+        margin-bottom: 18px;
+        font-size: 16px;
+        background: #0f0f15;
         color: #fff;
         border: 1px solid rgba(255,255,255,0.15);
     }
@@ -51,7 +57,7 @@
         margin-top: 10px;
         font-size: 14px;
         color: #b9b9ff;
-        margin-bottom: 4px;
+        margin-bottom: 6px;
     }
 
     .output {
@@ -59,8 +65,9 @@
         padding: 14px;
         border-radius: 10px;
         border: 1px solid rgba(255,255,255,0.1);
-        margin-bottom: 10px;
+        margin-bottom: 12px;
         font-size: 16px;
+        word-wrap: break-word;
     }
 
     .footer {
@@ -69,6 +76,18 @@
         color: #8080ff;
         font-size: 14px;
         opacity: 0.8;
+    }
+
+    /* RESPONSIVE ANDROID FIX */
+    @media (max-height: 650px) {
+        body {
+            justify-content: flex-start;
+            padding-top: 40px;
+        }
+
+        .container {
+            padding: 20px;
+        }
     }
 </style>
 </head>
